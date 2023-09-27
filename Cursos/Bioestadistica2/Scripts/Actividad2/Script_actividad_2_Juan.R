@@ -280,6 +280,7 @@ fviz_cluster(k_m3, data = datos,
              star.plot = TRUE, # Add segments from centroids to items
              repel = TRUE, # Avoid label overplotting (slow)
              ggtheme = theme_minimal())
+abline(h=0,v=0)
 
 fviz_cluster(k_m4, data = datos,
              palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07", "#7FFF00"),
@@ -287,6 +288,7 @@ fviz_cluster(k_m4, data = datos,
              star.plot = TRUE, # Add segments from centroids to items
              repel = TRUE, # Avoid label overplotting (slow)
              ggtheme = theme_minimal())
+abline(h=0,v=0)
 
 fviz_cluster(k_m5, data = datos,
              palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07", "#7FFF00"),
@@ -294,7 +296,7 @@ fviz_cluster(k_m5, data = datos,
              star.plot = TRUE, # Add segments from centroids to items
              repel = TRUE, # Avoid label overplotting (slow)
              ggtheme = theme_minimal())
-
+abline(h=0,v=0)
 
 pca <- prcomp(datos)
 loadings <- pca$rotation
