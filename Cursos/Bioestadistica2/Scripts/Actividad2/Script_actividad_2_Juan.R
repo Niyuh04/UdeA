@@ -20,7 +20,7 @@ library(openxlsx)
 database<-read.csv("https://raw.githubusercontent.com/Niyuh04/UdeA/main/Cursos/Bioestadistica2/bases%20de%20datos/caracteristicas%20de%20vinos.csv")
 datos <- scale(database[, -1])
 
-summary(datos[, -1])
+summary(datos)
 
 #Paso 1 Calcular las distancias y su método de aglomeración
 
