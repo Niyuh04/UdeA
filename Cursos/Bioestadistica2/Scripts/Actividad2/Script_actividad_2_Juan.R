@@ -4,6 +4,12 @@ install.packages("cluster")
 install.packages("factoextra")
 install.packages("dendextend")
 install.packages("ggdendro")
+install.packages("Rtsne")
+install.packages("ggplot2")
+install.packages("RColorBrewer")
+library(RColorBrewer)
+library(Rtsne)
+library(ggplot2)
 library(ggdendro)
 library(dendextend)
 library(factoextra)
@@ -19,9 +25,9 @@ summary(datos[, -1])
 #Paso 1 Calcular las distancias y su método de aglomeración
 
 dist_euclidiana_simple <- hclust(dist(datos), method = "single")
-dist_euclidiana_centroide <- hclust(dist(datos), method = "centroid")
+dist_euclidiana_average <- hclust(dist(datos), method = "average")
 dist_mahalanobis_simple <- hclust(daisy(datos), method = "single")
-dist_mahalanobis_centroide <- hclust(daisy(datos), method = "centroid")
+dist_mahalanobis_average <- hclust(daisy(datos), method = "average")
 
 # Paso 2 Calculo coeficiente de correlación cofenético
 
@@ -29,17 +35,17 @@ dist_mahalanobis_centroide <- hclust(daisy(datos), method = "centroid")
 dis_euc_sim <- cophenetic(dist_euclidiana_simple)  # Distancia cofenética 
 print(cor(as.vector(dist(datos)), as.vector(dis_euc_sim))) # Calculo el coeficiente de correlación cofenético con las distancias normales y las distancias cofenéticas convertidas en vector
 
-# Para distancia euclidiana y método de centroides
-dis_euc_cent <- cophenetic(dist_euclidiana_centroide) 
-print(cor(as.vector(dist(datos)), as.vector(dis_euc_cent)))
+# Para distancia euclidiana y método de average
+dis_euc_ave <- cophenetic(dist_euclidiana_average) 
+print(cor(as.vector(dist(datos)), as.vector(dis_euc_ave)))
 
 # Para distancia Mahalanobis y método simple
 dis_mah_sim <- cophenetic(dist_mahalanobis_simple) 
 print(cor(as.vector(daisy(datos)), as.vector(dis_mah_sim)))
 
-#Para distancia Mahalanobis y método centroides
-dis_mah_cent <- cophenetic(dist_mahalanobis_centroide) 
-print(cor(as.vector(daisy(datos)), as.vector(dis_mah_cent)))
+#Para distancia Mahalanobis y método average
+dis_mah_ave <- cophenetic(dist_mahalanobis_average) 
+print(cor(as.vector(daisy(datos)), as.vector(dis_mah_ave)))
 
 #Paso 3 Graficar
 
@@ -114,8 +120,215 @@ fviz_dend(as.dendrogram(dist_euclidiana_simple),
           main = "Distancia euclidiana + Enlace simple con 100 grupos",
           ylab = "Eje de disimilitud")
 
-length(colores)
+# para distancia euclidiana + método de aglomeración de enlace medio con 7, 30, 50 y 100 grupos
 
+fviz_dend(as.dendrogram(dist_euclidiana_average), 
+          k = 7,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia euclidiana + Enlace average con 7 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_euclidiana_average), 
+          k = 30,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia euclidiana + Enlace average con 30 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_euclidiana_average), 
+          k = 50,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia euclidiana + Enlace average con 50 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_euclidiana_average), 
+          k = 100,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia euclidiana + Enlace average con 100 grupos",
+          ylab = "Eje de disimilitud")
+
+# para distancia Mahalanobis + método de aglomeración de enlace simple con 7, 30, 50 y 100 grupos
+
+fviz_dend(as.dendrogram(dist_mahalanobis_simple), 
+          k = 7,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace simple con 7 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_simple), 
+          k = 30,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace simple con 30 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_simple), 
+          k = 50,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace simple con 50 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_simple), 
+          k = 100,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace simple con 100 grupos",
+          ylab = "Eje de disimilitud")
+
+# para distancia Mahalanobis + método de aglomeración de enlace average con 7, 30, 50 y 100 grupos
+
+fviz_dend(as.dendrogram(dist_mahalanobis_average), 
+          k = 7,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace average con 7 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_average), 
+          k = 30,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace average con 30 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_average), 
+          k = 50,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace average con 50 grupos",
+          ylab = "Eje de disimilitud")
+
+fviz_dend(as.dendrogram(dist_mahalanobis_average), 
+          k = 100,  # Número de grupos
+          k_colors = colores,
+          rect = TRUE,
+          cex = 0.6,
+          k_label = TRUE,
+          rect_width = 0.5,
+          rect_fill = TRUE,
+          main = "Distancia Mahalanobis + Enlace average con 100 grupos",
+          ylab = "Eje de disimilitud")
+
+# Paso 5, métodos no jerarquicos
+
+# Primero calculamos el número óptimo de clusters
+fviz_nbclust(datos, kmeans, method = "wss") +
+  geom_vline(xintercept = 4, linetype = 2) +
+  ggtitle("Número óptimo de clusters")+
+  ylab("Suma cuadrados de las distancias dentro de los clusters")
+
+# Ahora hacemos el cluter con diferentes agrupaciones, como el número óptimo es 4 yo usaré 3 y 5 para ver cómo cambia
+
+k_m3 <-kmeans(datos, 3, nstart = 1000)
+k_m4 <-kmeans(datos, 4, nstart = 1000)
+k_m5 <-kmeans(datos, 5, nstart = 1000)
+
+
+
+fviz_cluster(k_m3, data = datos,
+             palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07", "#7FFF00"),
+             ellipse.type = "euclid", # Concentration ellipse
+             star.plot = TRUE, # Add segments from centroids to items
+             repel = TRUE, # Avoid label overplotting (slow)
+             ggtheme = theme_minimal())
+
+fviz_cluster(k_m4, data = datos,
+             palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07", "#7FFF00"),
+             ellipse.type = "euclid", # Concentration ellipse
+             star.plot = TRUE, # Add segments from centroids to items
+             repel = TRUE, # Avoid label overplotting (slow)
+             ggtheme = theme_minimal())
+
+fviz_cluster(k_m5, data = datos,
+             palette = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07", "#7FFF00"),
+             ellipse.type = "euclid", # Concentration ellipse
+             star.plot = TRUE, # Add segments from centroids to items
+             repel = TRUE, # Avoid label overplotting (slow)
+             ggtheme = theme_minimal())
+
+
+pca <- prcomp(datos)
+loadings <- pca$rotation
+print(loadings)
+
+
+
+
+
+
+
+# Extrae los coeficientes de los factores del modelo
+coeficientes_factores <- loadings
+
+# Calcula las puntuaciones de las variables originales (datos estandarizados)
+datos_estandarizados <- datos
+
+# Calcula las puntuaciones de factores manualmente
+puntuaciones_factores <- datos_estandarizados %*% coeficientes_factores
+
+
+num_clusters <- 4  # Puedes ajustar este número según tus necesidades
+
+# Ejecuta el algoritmo K-means
+kmeans_result <- kmeans(puntuaciones_factores, centers = num_clusters)
+
+# Imprime los resultados del clustering
+print(kmeans_result)
+
+# Para obtener las asignaciones de cluster de cada observación
+cluster_assignments <- kmeans_result$cluster
+
+plot(puntuaciones_factores, col = cluster_assignments, pch = 16, main = "K-means Clustering 2 grupos", xlab = "X", ylab = "Y")
+abline(h=0,v=0)
 
 
 
