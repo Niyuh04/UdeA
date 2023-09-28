@@ -333,4 +333,26 @@ plot(puntuaciones_factores, col = cluster_assignments, pch = 16, main = "K-means
 abline(h=0,v=0)
 
 
+# Calcular el coeficiente de silueta 
+silhouette_scores3 <- silhouette(k_m3$cluster, dist(datos))
+print(silhouette_scores)
 
+avg_silhouette3 <- mean(silhouette_scores3[, "sil_width"])
+print(avg_silhouette3)
+
+
+# Calcular el coeficiente de silueta 
+silhouette_scores4 <- silhouette(k_m4$cluster, dist(datos))
+print(silhouette_scores)
+
+avg_silhouette4 <- mean(silhouette_scores4[, "sil_width"])
+print(avg_silhouette4)
+
+
+
+# Calcular el coeficiente de silueta 
+silhouette_scores5 <- silhouette(k_m5$cluster, dist(datos))
+print(silhouette_scores)
+
+avg_silhouette5 <- mean(silhouette_scores5[, "sil_width"])
+print(avg_silhouette5)
